@@ -28,7 +28,7 @@ exports.newUser = async (req, res) => {
         const {userName} = req.body;
         if (!userName) {
             return res.send({
-                message: "All fields required",
+                message: "field is required",
             })
         }
 

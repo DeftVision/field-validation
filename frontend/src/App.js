@@ -8,12 +8,24 @@ const form_fields = {
 
 function App() {
   const [form, setForm] = useState(form_fields);
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
+    let validationErrors = {};
+    if(!form.userName) {
+        validationErrors.userName = 'username is required';
+    }
+
+    if(Object.keys(validationErrors).length > 0) {
+        setErrors(validationErrors);
+        return;
+    }
+
     try {
-        const response = await fetch(`http://localhost:8000/new`, {
+        const response = await fetch(`http://localhost:8001/new`, {
             method: 'POST',
             body: JSON.stringify(form),
             headers: {
@@ -24,6 +36,7 @@ function App() {
         const _response = await response.json();
         if(response.ok) {
             console.log(_response.message);
+            setErrors({});
         } else {
             console.log(_response.error);
         }
@@ -48,6 +61,8 @@ function App() {
                           userName: e.target.value,
                       })
                   }}
+                  error={!!errors.userName}
+
               />
           </Box>
           <Button type="submit">save</Button>
