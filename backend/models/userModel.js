@@ -5,6 +5,14 @@ const userSchema = new schema({
         type: String,
         required: true
     },
+    firstName: {
+        type: String,
+        required: true
+    },
+    address: {
+        type: String,
+        required: false
+    }
 })
 
 const userModel = mongoose.model("User", userSchema);

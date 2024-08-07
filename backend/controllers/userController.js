@@ -25,14 +25,14 @@ exports.getUsers = async (req, res) => {
 
 exports.newUser = async (req, res) => {
     try {
-        const {userName} = req.body;
-        if (!userName) {
+        const {userName, firstName, address} = req.body;
+        if (!userName || !firstName) {
             return res.send({
                 message: "field is required",
             })
         }
 
-        const user = new userModel({userName});
+        const user = new userModel({userName, firstName, address});
         await user.save();
         return res.send({
             message: "User saved successfully",
